@@ -69,7 +69,7 @@ def main():
     qr_text = 'TestData'
     qr_img = generate_qr(qr_text)
     # Load the logo
-    logo_img = load_image('template.png')
+    logo_img = load_image('test_template.png')
     # Edit image
     img_text = [ 'test_text', 'line 2...' ]
     edited_image = add_text_to_image(logo_img, img_text)
