@@ -133,3 +133,4 @@ dmypy.json
 .pyre/
 
 /template.png
+/.vscode

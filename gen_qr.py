@@ -1,6 +1,6 @@
 import qrcode
 
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 
 
 def merge_images(qr_img, logo_img):
@@ -22,7 +22,7 @@ def merge_images(qr_img, logo_img):
     return result
 
 
-def generate_qr(info_text, ):
+def generate_qr(info_text):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -36,15 +36,40 @@ def generate_qr(info_text, ):
     return qr_img
 
 
+def add_text_to_image(edit_image, text_lines):
+    """ https://towardsdatascience.com/adding-text-on-image-using-python-2f5bf61bf448 """
+    text_size = 14
+    title_font = ImageFont.truetype('verdana.ttf', text_size)
+
+    start_position = (40, 15)
+    text_color = (0, 0, 0)
+
+    for line in text_lines:
+        image_editable = ImageDraw.Draw(edit_image)
+        image_editable.text(start_position, line, text_color, font=title_font)
+        new_pos_y = start_position[1] + text_size + 2
+        pos_x = start_position[0]
+        start_position = (pos_x, new_pos_y)
+    return edit_image
+
+
+def load_image(image_name):
+    image_loaded = Image.open(image_name)
+    return image_loaded
+
+
 def main():
     print('Generate QR')
     save_path = 'test/test_file.png'
     # Generate QR code image
     qr_img = generate_qr('TestData')
     # Load the logo
-    logo_img = Image.open('template.png')
+    logo_img = load_image('template.png')
+    # Edit image
+    img_text = [ "test_text", "line 2..." ]
+    edited_image = add_text_to_image(logo_img, img_text)
     # Merge
-    merged_img = merge_images(qr_img, logo_img)
+    merged_img = merge_images(qr_img, edited_image)
 
     merged_img.save(save_path)
 
