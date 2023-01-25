@@ -4,8 +4,9 @@ from PIL import Image, ImageFont, ImageDraw
 
 
 def merge_images(qr_img, logo_img):
-    """ https://stackoverflow.com/questions/63355160/how-to-concatenate-two-images-one-on-top-of-the-other-in-python """
-    """ Merge qr + logo (left + right) """
+    """ https://stackoverflow.com/questions/63355160/how-to-concatenate-two-images-one-on-top-of-the-other-in-python
+        Merge qr + logo (left + right)
+    """
 
     # Scale the logo image. The width of the scaled logo shall be equal to the width of the QR code
     qr_width, qr_height = qr_img.size
@@ -18,7 +19,7 @@ def merge_images(qr_img, logo_img):
     logo_img = logo_img.resize(logo_new_size)
 
     # Create an empty image to paste both images on
-    margin = 20
+    #margin = 20
     result = Image.new(mode='RGB', size=(logo_new_width, logo_new_height), color='white')
     result.paste(logo_img, (0, 0))
     result.paste(qr_img, (logo_current_width, 0))
